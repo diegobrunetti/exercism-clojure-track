@@ -10,8 +10,5 @@
                  (zipmap a-z (drop rot (cycle a-z)))
                  (zipmap A-Z (drop rot (cycle A-Z))))]
     (->> input
-         (map (fn [ch]
-                (if (Character/isLetter ch)
-                  (get rotated ch)
-                  ch)))
+         (map #(rotated % %))
          (str/join))))
