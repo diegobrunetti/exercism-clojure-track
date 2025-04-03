@@ -4,7 +4,7 @@
   "Returns the index of num in coll, or -1 if num is not found."
   [num coll]
   (loop [start 0
-         end (- (count coll) 1)]
+         end (dec (count coll))]
     (let [index (quot (+ start end) 2)
           mid (get coll index)]
       (cond
