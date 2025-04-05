@@ -2,19 +2,16 @@
 
 (defn validate [span input]
   (cond
-    (some? (re-find #"([A-Za-z])" input)) "digits input must only contain digits"
-    (> span (count input)) "span must be smaller than string length"
-    (neg? span) "span must not be negative"
-    :else nil))
+    (some? (re-find #"\D" input)) "digits input must only contain digits"
+    (> span (count input)) "span must not exceed string length"
+    (neg? span) "span must not be negative"))
 
 (defn get-digits [input]
-  (->> (char-array input)
-       (map str)
-       (map Integer/parseInt)))
+  (map #(Character/digit % 10) input))
 
 (defn get-series [span, input] (partition span 1 [0] input))
-(defn get-product [series] (map (fn [[& s]] (apply * s)) series))
-(defn get-largest [products] (reduce max products))
+(defn get-product [series] (map (partial apply *) series))
+(defn get-largest [products] (apply max products))
 
 (defn largest-product [span input]
   (let [error (validate span input)]
