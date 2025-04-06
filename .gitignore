@@ -13,7 +13,7 @@ pom.xml.asc
 .nrepl-port
 .cpcache/
 .clj-kondo/
-.exercism/
 .lsp/
 .calva/
 target/
+.exercism/
