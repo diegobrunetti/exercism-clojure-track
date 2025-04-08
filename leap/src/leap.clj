@@ -5,7 +5,8 @@
 (defn leap-year?
   "Determine if a year is a leap year"
   [year]
-  (cond-> false
-    (divisible-by? 4 year) (or true)
-    (divisible-by? 100 year) (and false)
-    (divisible-by? 400 year) (or true)))
+  (cond
+    (divisible-by? 400 year) true
+    (divisible-by? 100 year) false
+    (divisible-by? 4 year) true
+    :else false))
