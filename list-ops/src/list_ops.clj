@@ -5,9 +5,9 @@
   [f coll acc]
   (loop [remaining coll
          result acc]
-    (if (empty? remaining)
-      result
-      (recur (rest remaining) (f result (first remaining))))))
+    (if-let [[x & xs] (seq remaining)]
+      (recur xs (f result x))
+      result)))
 
 (defn foldr
   "Given a function, a vector, and an initial accumulator, it folds (reduces) each item into the accumulator from the right"
