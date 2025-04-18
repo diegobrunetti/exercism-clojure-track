@@ -12,11 +12,11 @@
 (defn foldr
   "Given a function, a vector, and an initial accumulator, it folds (reduces) each item into the accumulator from the right"
   [f coll acc]
-  (loop [remaining coll
+  (loop [remaining (vec coll)
          result acc]
     (if (empty? remaining)
       result
-      (recur (drop-last remaining) (f result (last remaining))))))
+      (recur (pop remaining) (f result (peek remaining))))))
 
 (defn append
   "Given two vectors, it adds all the items in the second vector to the end of the first vector"
