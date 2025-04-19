@@ -15,6 +15,6 @@
     (and (< 1 (count s))
          (let [parsed      (map #(Character/digit % 10) s)
                transformed (map luhn-double (zigzag-collect (drop 1 parsed)))
-               untouched   (flatten (zigzag-collect parsed))
+               untouched   (zigzag-collect parsed)
                sum         (reduce + (concat transformed untouched))]
            (zero? (rem sum 10))))))
