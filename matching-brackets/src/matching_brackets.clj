@@ -1,16 +1,17 @@
-(ns matching-brackets
-  (:require [clojure.string :as str]))
+(ns matching-brackets)
 
-(def pairs {\{ \}, \[ \], \( \)})
+(def brackets {\{ \}, \[ \], \( \)})
+(def opening? (set (keys brackets)))
+(def bracket? (set (flatten (seq brackets))))
 
-(defmulti parse-symbol (fn [s _] (if (contains? (set (keys pairs)) s)
+(defmulti parse-symbol (fn [s _] (if (opening? s)
                                    :opening
                                    :closing)))
 
 (defmethod parse-symbol :opening [s stack] (conj stack s))
 
 (defmethod parse-symbol :closing [s stack]
-  (if (= (pairs (peek stack)) s)
+  (if (= (brackets (peek stack)) s)
     (pop stack)
     (conj stack :syntax-error)))
 
@@ -18,7 +19,7 @@
   "Returns true if the given string has properly matched brackets; otherwise, returns false."
   [s]
   (loop [stack []
-         input (vec (str/replace s #"[^\[\](){}]" ""))]
+         input (filter bracket? s)]
     (if (empty? input)
       (empty? stack)
       (recur (parse-symbol (first input) stack) (rest input)))))
